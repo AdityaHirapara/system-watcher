@@ -8,6 +8,7 @@ import (
 )
 
 var memUsage float64 = 0
+var loadavg = 0.0
 
 func main() {
 	systray.Run(onReady, onExit)
@@ -19,12 +20,14 @@ func onReady() {
 	titleItem := systray.AddMenuItem("System Watcher", "")
 
 	ramStatusItem := systray.AddMenuItem(fmt.Sprintf("Memory usage: %.2f%%", memUsage), "")
+	loadavgItem := systray.AddMenuItem(fmt.Sprintf("Load avg: %.2f", loadavg), "")
 
 	systray.AddSeparator()
 	quitItem := systray.AddMenuItem("Quit", "")
 
 	titleItem.Disable()
 	ramStatusItem.Disable()
+	loadavgItem.Disable()
 
 	go func() {
 		for {
