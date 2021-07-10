@@ -7,5 +7,6 @@ require (
 	github.com/getlantern/systray v1.1.0
 	github.com/go-ole/go-ole v1.2.5 // indirect
 	github.com/shirou/gopsutil v3.21.6+incompatible
+	github.com/tklauser/go-sysconf v0.3.6 // indirect
 	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c
 )

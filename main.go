@@ -5,6 +5,7 @@ import (
 	"time"
 
 	systray "github.com/getlantern/systray"
+	host "github.com/shirou/gopsutil/host"
 	load "github.com/shirou/gopsutil/load"
 )
 
@@ -52,6 +53,9 @@ func onReady() {
 			loadavgObj, _ := load.Avg()
 			loadavg = loadavgObj.Load5
 			loadavgItem.SetTitle((fmt.Sprintf("Load avg: %.2f", loadavg)))
+
+			uptime, _ = host.Uptime()
+			uptimeItem.SetTitle((fmt.Sprintf("Uptime: %s", getTimeString(uptime))))
 
 			time.Sleep(1 * time.Second)
 		}
