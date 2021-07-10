@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
 	"time"
 
 	systray "github.com/getlantern/systray"
@@ -40,17 +39,12 @@ func onReady() {
 	// goroutine that updates stats in every 1s cycle
 	go func() {
 		for {
-			memUsage = randomStat()
+			memUsage, _ = getMemoryUsage()
 			ramStatusItem.SetTitle(fmt.Sprintf("Memory usage: %.2f%%", memUsage))
 
 			time.Sleep(1 * time.Second)
 		}
 	}()
-}
-
-func randomStat() float64 {
-	random := rand.Float64() * 100
-	return random
 }
 
 func onExit() {
