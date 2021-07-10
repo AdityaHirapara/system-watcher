@@ -5,6 +5,7 @@ import (
 	"time"
 
 	systray "github.com/getlantern/systray"
+	load "github.com/shirou/gopsutil/load"
 )
 
 var memUsage float64 = 0
@@ -44,6 +45,10 @@ func onReady() {
 		for {
 			memUsage, _ = getMemoryUsage()
 			ramStatusItem.SetTitle(fmt.Sprintf("Memory usage: %.2f%%", memUsage))
+
+			loadavgObj, _ := load.Avg()
+			loadavg = loadavgObj.Load5
+			loadavgItem.SetTitle((fmt.Sprintf("Load avg: %.2f", loadavg)))
 
 			time.Sleep(1 * time.Second)
 		}
