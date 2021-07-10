@@ -10,6 +10,7 @@ import (
 
 var memUsage float64 = 0
 var loadavg = 0.0
+var uptime uint64 = 0
 
 func main() {
 	systray.Run(onReady, onExit)
@@ -22,6 +23,7 @@ func onReady() {
 
 	ramStatusItem := systray.AddMenuItem(fmt.Sprintf("Memory usage: %.2f%%", memUsage), "")
 	loadavgItem := systray.AddMenuItem(fmt.Sprintf("Load avg: %.2f", loadavg), "")
+	uptimeItem := systray.AddMenuItem(fmt.Sprintf("Uptime: %s", getTimeString(uptime)), "")
 
 	systray.AddSeparator()
 	quitItem := systray.AddMenuItem("Quit", "")
@@ -29,6 +31,7 @@ func onReady() {
 	titleItem.Disable()
 	ramStatusItem.Disable()
 	loadavgItem.Disable()
+	uptimeItem.Disable()
 
 	go func() {
 		for {
@@ -53,6 +56,11 @@ func onReady() {
 			time.Sleep(1 * time.Second)
 		}
 	}()
+}
+
+func getTimeString(seconds uint64) string {
+	duration, _ := time.ParseDuration(fmt.Sprintf("%ds", seconds))
+	return duration.String()
 }
 
 func onExit() {
